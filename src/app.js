@@ -1,12 +1,15 @@
 import { format } from "date-fns"
 import { ru } from "date-fns/locale"
 
-async function searchTours() {
-    const respanse = await fetch(
-        "https://www.bit-by-bit.ru/api/student-projects/tours"
-    )
-    const tours = await respanse.json()
+async function loadTours(){
+    const response = await fetch("https://www.bit-by-bit.ru/api/student-projects/tours")
+    const data = await response.json()
 
+    return data
+}
+
+function searchTours(tours) {
+    document.getElementById("myContainer").innerHTML = ""
     tours.forEach((tour) => {
         document.getElementById("myContainer").innerHTML += `
             <div class="bg-white rounded-xl overflow-hidden flex flex-col justify-between">
@@ -36,12 +39,55 @@ async function searchTours() {
                     <div class="mt-3 text-gray-500 text-sm flex items-center ">
 
                     </div>
-                    <button class="button-color mt-4 pl-6">Подробнее</button>
+                    <button id class="button-color mt-4">Подробнее</button>
                 </div>
+                <div id=""></div>
                  
                </div>
                
             `
     })
 }
-searchTours()
+
+
+function filterByCountry(tours,country){
+    if(country){
+        const filteredTours = tours.filter((tour) => {
+            return tour.country === country
+    })
+    searchTours(filteredTours)
+    } else{
+    searchTours(tours)
+  }
+}
+
+function filterByPrice(tours){
+    let price = document.getElementById("price").value;
+    document.getElementById("hidden").innerHTML = ""
+    document.getElementById("hidden").innerHTML += 
+    `
+    <div>Вы выбрали цену: ${price}</div>
+    `
+    const filtered = tours.filter((tour) => {
+        return tour.price <= price
+    })
+    searchTours(filtered)
+}
+   
+
+
+async function init(){
+    const tours = await loadTours()
+    searchTours(tours)
+
+    document.getElementById("maldives").addEventListener("click",() => filterByCountry(tours, "Мальдивы"))
+    document.getElementById("thailand").addEventListener("click",() => filterByCountry(tours, "Тайланд"))
+    document.getElementById("indonesia").addEventListener("click",() => filterByCountry(tours, "Индонезия"))
+    document.getElementById("egypt").addEventListener("click",() => filterByCountry(tours, "Египет"))
+    document.getElementById("cyprus").addEventListener("click",() => filterByCountry(tours, "Кипр"))
+    document.getElementById("all").addEventListener("click",() => filterByCountry(tours))
+    document.getElementById("price").addEventListener("change",() => filterByPrice(tours))
+}
+
+init()
+

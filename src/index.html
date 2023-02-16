@@ -11,7 +11,7 @@
             <div class="max-w-6xl mx-auto py-12 px-12 lg:px-0">
                 <div class="flex justify-end gap-4">
                     <button class="button-color">Избранное</button>
-                    <button class="button-color">Все туры</button>
+                    <button id="all" class="button-color">Все туры</button>
                 </div>
 
                 <div class="text-center">
@@ -22,9 +22,25 @@
                         Приятного отдыха и ярких впечатлений!
                     </p>
                 </div>
-
+                <!--фильтр по стране-->
+                <div class = "flex flex-row justify-between mt-12">
+                    <button id="maldives" class="button-color">Мальдивы</button>
+                    <button id="thailand" class="button-color">Тайланд</button>
+                    <button id="indonesia" class="button-color">Индонезия</button>
+                    <button id="egypt" class="button-color">Египет</button>
+                    <button id="cyprus" class="button-color">Кипр</button>
+                </div>
+                    <!--фильтр по цене-->
+                    <div class="mt-4 ml-2">По цене</div>
+                    <div>
+                        <input id="price" type="range" value="496000" min="16000" max="496000" />
+                        <output class="mt-2" id="rangevalue">496000</output>
+                        <div id="hidden"></div>
+                    </div>
+                
+                  <!--контейнер с турами-->
                 <div id="myContainer" class="mt-12 gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    
+
                 </div>
             </div>
         </div>
